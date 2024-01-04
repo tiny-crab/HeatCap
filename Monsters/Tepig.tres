@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Monster" load_steps=2 format=3 uid="uid://dkdfuoex2q3wi"]
+
+[ext_resource type="Script" path="res://ResourceTypes/monster_type.gd" id="2_krih7"]
+
+[resource]
+script = ExtResource("2_krih7")
+maxHealth = 25
+freezingZone = 2
+safeZone = 3
+overheatingZone = 4
+actions = Array[Resource("res://ResourceTypes/action.gd")]([])
