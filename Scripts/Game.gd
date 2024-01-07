@@ -9,5 +9,3 @@ func _ready():
     var monsterUI = $Canvas/MonsterUI
     monsterUI.monster = leadMonster
     monsterUI.render()
-    
-    $Player/LeadMonster.monster = leadMonster
