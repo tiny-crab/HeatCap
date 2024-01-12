@@ -5,13 +5,18 @@ var monster: Monster
 
 func attach(toAttach: Monster):
     monster = toAttach
-    monster.updated.connect(render)
-    render()
 
-func render():
     $HealthBar.max_value = monster.maxHealth
-    $HealthBar.value = monster.currHealth
 
+    monster.health_updated.connect(render_health)
+    render_health()
+
+    monster.hotzone_updated.connect(render_bar)
+    monster.coldzone_updated.connect(render_bar)
+    monster.heat_updated.connect(render_bar)
+    render_bar()
+
+func render_bar():
     $HeatBar.max_value = monster.currHotZoneMax
     $HeatBar.min_value = monster.currColdZoneMin
     $HeatBar/Value.text =  "[center]%s[/center]" % monster.currHeat
@@ -24,3 +29,6 @@ func render():
         sb.bg_color = Color("859900")
     if monster.isHot:
         sb.bg_color = Color("dc322f")
+
+func render_health():
+    $HealthBar.value = monster.currHealth

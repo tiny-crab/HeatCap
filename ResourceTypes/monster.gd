@@ -2,7 +2,12 @@ extends Resource
 class_name Monster
 
 var maxHealth: int
-var currHealth: int
+
+signal health_updated
+var currHealth: int:
+    set(value):
+        currHealth = value
+        emit_signal(health_updated.get_name())
 
 # let maxColdTicks, maxSafeTicks, maxHotTicks = 2, 3, 4
 # all end-exclusive
@@ -25,34 +30,44 @@ var currHealth: int
 # If overheated again:
 #  X  1  2  3  4  5  6  X  X
 #    [C][Safe   ][Hot ]
-var currHeat: int
+
 var startingHeat: int
+
+signal heat_updated
+var currHeat: int:
+    set(value):
+        currHeat = value
+        emit_signal(heat_updated.get_name())
 
 var coldZoneMin: int
 var coldZoneMax: int
-var currColdZoneMin: int
-var currColdZoneMax: int
+
+signal coldzone_updated
+var currColdZoneMin: int:
+    set(value):
+        currColdZoneMin = value
+        emit_signal(coldzone_updated.get_name())
 
 var safeZoneMin: int
 var safeZoneMax: int
 
 var hotZoneMin: int
 var hotZoneMax: int
-var currHotZoneMin: int
-var currHotZoneMax: int
+signal hotzone_updated
+var currHotZoneMax: int:
+    set(value):
+        currHotZoneMax = value
+        emit_signal(hotzone_updated.get_name())
 
 var isCold: bool:
     get:
-        return currHeat >= currColdZoneMin and currHeat <= currColdZoneMax
+        return currHeat >= currColdZoneMin and currHeat < safeZoneMin
 var isSafe: bool:
     get:
         return currHeat >= safeZoneMin and currHeat <= safeZoneMax
 var isHot: bool:
     get:
-        return currHeat >= currHotZoneMin and currHeat <= currHotZoneMax
-
-# TODO: split this signal for each property that can be modified
-signal updated
+        return currHeat > safeZoneMax and currHeat <= currHotZoneMax
 
 func _init(type: MonsterType):
     maxHealth = type.maxHealth
@@ -61,14 +76,12 @@ func _init(type: MonsterType):
     coldZoneMin = 0
     coldZoneMax = type.maxColdTicks - 1
     currColdZoneMin = coldZoneMin
-    currColdZoneMax = coldZoneMax
     
     safeZoneMin = type.maxColdTicks
     safeZoneMax = type.maxColdTicks + type.maxSafeTicks - 1
     
     hotZoneMin = type.maxColdTicks + type.maxSafeTicks
     hotZoneMax = type.maxColdTicks + type.maxSafeTicks + type.maxHotTicks - 1
-    currHotZoneMin = hotZoneMin
     currHotZoneMax = hotZoneMax
     
     currHeat = type.startingHeat
@@ -76,22 +89,18 @@ func _init(type: MonsterType):
 
 func addHealth(value: int):
     currHealth = clamp(currHealth + value, 0, maxHealth)
-    emit_signal(updated.get_name())
 
 func subtractHealth(value: int):
     currHealth = clamp(currHealth - value, 0, maxHealth)
-    emit_signal(updated.get_name())
 
 func addHeat(value: int):
     currHeat += value
     if (currHeat > currHotZoneMax):
-        currHotZoneMax = clamp(currHotZoneMax - 1, safeZoneMax + 1, hotZoneMax)
+        currHotZoneMax = clamp(currHotZoneMax - 1, safeZoneMax, hotZoneMax)
         currHeat = clamp(startingHeat, currColdZoneMin, currHotZoneMax)
-    emit_signal(updated.get_name())
 
 func subtractHeat(value: int):
     currHeat -= value
     if (currHeat < currColdZoneMin):
         currColdZoneMin = clamp(currColdZoneMin + 1, coldZoneMin, safeZoneMin)
         currHeat = clamp(startingHeat, currColdZoneMin, currHotZoneMax)
-    emit_signal(updated.get_name())
