@@ -9,47 +9,70 @@ var currHealth: int
 # Cold Zone = 0, 1
 # Safe Zone = 2, 3, 4
 # Hot Zone = 5, 6, 7, 8
-
-# Freezes below 0, after freezing, currColdTicks -= 1
-var maxColdTicks: int
-var currColdTicks: int
-
-var maxSafeTicks: int
-
-# Overheats beyond maxHotTicks, after overheating, currHotTicks -= 1
-var maxHotTicks: int
-var currHotTicks: int
-
+# 
+# To begin:
+#  0  1  2  3  4  5  6  7  8
+# [Cold][Safe   ][Hot       ]
+#
+# If overheated once, hotZoneMax - 1:
+#  0  1  2  3  4  5  6  7  X
+# [Cold][Safe   ][Hot    ]
+#
+# If also frozen once, coldZoneMin + 1:
+#  X  1  2  3  4  5  6  7  X
+#    [C][Safe   ][Hot    ]
+#
+# If overheated again:
+#  X  1  2  3  4  5  6  X  X
+#    [C][Safe   ][Hot ]
 var currHeat: int
+var startingHeat: int
 
+var coldZoneMin: int
+var coldZoneMax: int
+var currColdZoneMin: int
+var currColdZoneMax: int
+
+var safeZoneMin: int
+var safeZoneMax: int
+
+var hotZoneMin: int
+var hotZoneMax: int
+var currHotZoneMin: int
+var currHotZoneMax: int
+
+var isCold: bool:
+    get:
+        return currHeat >= currColdZoneMin and currHeat <= currColdZoneMax
+var isSafe: bool:
+    get:
+        return currHeat >= safeZoneMin and currHeat <= safeZoneMax
+var isHot: bool:
+    get:
+        return currHeat >= currHotZoneMin and currHeat <= currHotZoneMax
+
+# TODO: split this signal for each property that can be modified
 signal updated
 
 func _init(type: MonsterType):
     maxHealth = type.maxHealth
     currHealth = maxHealth - 1
     
-    maxColdTicks = type.maxColdTicks
-    currColdTicks = maxColdTicks
+    coldZoneMin = 0
+    coldZoneMax = type.maxColdTicks - 1
+    currColdZoneMin = coldZoneMin
+    currColdZoneMax = coldZoneMax
     
-    maxSafeTicks = type.maxSafeTicks
+    safeZoneMin = type.maxColdTicks
+    safeZoneMax = type.maxColdTicks + type.maxSafeTicks - 1
     
-    maxHotTicks = type.maxHotTicks
-    currHotTicks = maxHotTicks
+    hotZoneMin = type.maxColdTicks + type.maxSafeTicks
+    hotZoneMax = type.maxColdTicks + type.maxSafeTicks + type.maxHotTicks - 1
+    currHotZoneMin = hotZoneMin
+    currHotZoneMax = hotZoneMax
     
-    # need to change to startingHeat when not debugging
-    currHeat = RandomNumberGenerator.new().randi_range(0, maxColdTicks + maxSafeTicks + maxHotTicks)
-
-func isCold(heat):
-    return heat < currColdTicks
-    
-func isSafe(heat):
-    return heat >= currColdTicks and heat < currColdTicks + maxSafeTicks
-
-func isHot(heat):
-    return heat >= currColdTicks + maxSafeTicks and heat < currColdTicks + maxSafeTicks + currHotTicks
-
-func maxHeat():
-    return currColdTicks + maxSafeTicks + currHotTicks
+    currHeat = type.startingHeat
+    startingHeat = type.startingHeat
 
 func addHealth(value: int):
     currHealth = clamp(currHealth + value, 0, maxHealth)
@@ -60,9 +83,15 @@ func subtractHealth(value: int):
     emit_signal(updated.get_name())
 
 func addHeat(value: int):
-    currHeat = clamp(currHeat + value, 0, self.maxHeat())
+    currHeat += value
+    if (currHeat > currHotZoneMax):
+        currHotZoneMax = clamp(currHotZoneMax - 1, safeZoneMax + 1, hotZoneMax)
+        currHeat = clamp(startingHeat, currColdZoneMin, currHotZoneMax)
     emit_signal(updated.get_name())
 
 func subtractHeat(value: int):
-    currHeat = clamp(currHeat - value, 0, self.maxHeat())
+    currHeat -= value
+    if (currHeat < currColdZoneMin):
+        currColdZoneMin = clamp(currColdZoneMin + 1, coldZoneMin, safeZoneMin)
+        currHeat = clamp(startingHeat, currColdZoneMin, currHotZoneMax)
     emit_signal(updated.get_name())

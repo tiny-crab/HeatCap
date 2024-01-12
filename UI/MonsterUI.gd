@@ -12,14 +12,15 @@ func render():
     $HealthBar.max_value = monster.maxHealth
     $HealthBar.value = monster.currHealth
 
-    $HeatBar.max_value = monster.maxColdTicks + monster.maxSafeTicks + monster.maxHotTicks
+    $HeatBar.max_value = monster.currHotZoneMax
+    $HeatBar.min_value = monster.currColdZoneMin
     $HeatBar/Value.text =  "[center]%s[/center]" % monster.currHeat
     $HeatBar.value = monster.currHeat
     var sb = StyleBoxFlat.new()
     $HeatBar.add_theme_stylebox_override("fill", sb)
-    if monster.isCold(monster.currHeat):
+    if monster.isCold:
         sb.bg_color = Color("268bd2")
-    if monster.isSafe(monster.currHeat):
+    if monster.isSafe:
         sb.bg_color = Color("859900")
-    if monster.isHot(monster.currHeat):
+    if monster.isHot:
         sb.bg_color = Color("dc322f")
