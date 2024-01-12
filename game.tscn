@@ -17,19 +17,20 @@ script = ExtResource("1_1k4kd")
 
 [node name="HealthBar" type="ProgressBar" parent="Canvas/MonsterUI"]
 layout_mode = 0
-offset_left = 20.0
+offset_left = 35.0
 offset_top = 19.0
-offset_right = 218.0
+offset_right = 233.0
 offset_bottom = 51.0
 
 [node name="HeatBar" type="ProgressBar" parent="Canvas/MonsterUI"]
 layout_mode = 0
-offset_left = 19.0
+offset_left = 35.0
 offset_top = 64.0
-offset_right = 217.0
+offset_right = 233.0
 offset_bottom = 96.0
 step = 1.0
 show_percentage = false
+metadata/_edit_group_ = true
 
 [node name="Value" type="RichTextLabel" parent="Canvas/MonsterUI/HeatBar"]
 layout_mode = 0
@@ -38,3 +39,36 @@ offset_bottom = 31.0
 bbcode_enabled = true
 text = "0"
 autowrap_mode = 0
+
+[node name="SubtractHealthButton" type="Button" parent="Canvas"]
+offset_left = 6.0
+offset_top = 23.0
+offset_right = 30.0
+offset_bottom = 49.0
+text = "-"
+
+[node name="AddHealthButton" type="Button" parent="Canvas"]
+offset_left = 237.0
+offset_top = 22.0
+offset_right = 261.0
+offset_bottom = 48.0
+text = "+"
+
+[node name="SubtractHeatButton" type="Button" parent="Canvas"]
+offset_left = 5.0
+offset_top = 67.0
+offset_right = 29.0
+offset_bottom = 93.0
+text = "-"
+
+[node name="AddHeatButton" type="Button" parent="Canvas"]
+offset_left = 236.0
+offset_top = 66.0
+offset_right = 260.0
+offset_bottom = 92.0
+text = "+"
+
+[connection signal="pressed" from="Canvas/SubtractHealthButton" to="." method="_on_subtract_health_button_pressed"]
+[connection signal="pressed" from="Canvas/AddHealthButton" to="." method="_on_add_health_button_pressed"]
+[connection signal="pressed" from="Canvas/SubtractHeatButton" to="." method="_on_subtract_heat_button_pressed"]
+[connection signal="pressed" from="Canvas/AddHeatButton" to="." method="_on_add_heat_button_pressed"]

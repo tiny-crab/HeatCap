@@ -22,6 +22,8 @@ var currHotTicks: int
 
 var currHeat: int
 
+signal updated
+
 func _init(type: MonsterType):
     maxHealth = type.maxHealth
     currHealth = maxHealth - 1
@@ -45,3 +47,22 @@ func isSafe(heat):
 
 func isHot(heat):
     return heat >= currColdTicks + maxSafeTicks and heat < currColdTicks + maxSafeTicks + currHotTicks
+
+func maxHeat():
+    return currColdTicks + maxSafeTicks + currHotTicks
+
+func addHealth(value: int):
+    currHealth = clamp(currHealth + value, 0, maxHealth)
+    emit_signal(updated.get_name())
+
+func subtractHealth(value: int):
+    currHealth = clamp(currHealth - value, 0, maxHealth)
+    emit_signal(updated.get_name())
+
+func addHeat(value: int):
+    currHeat = clamp(currHeat + value, 0, self.maxHeat())
+    emit_signal(updated.get_name())
+
+func subtractHeat(value: int):
+    currHeat = clamp(currHeat - value, 0, self.maxHeat())
+    emit_signal(updated.get_name())

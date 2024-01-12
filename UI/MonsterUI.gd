@@ -3,6 +3,11 @@ class_name MonsterUI
 
 var monster: Monster
 
+func attach(toAttach: Monster):
+    monster = toAttach
+    monster.updated.connect(render)
+    render()
+
 func render():
     $HealthBar.max_value = monster.maxHealth
     $HealthBar.value = monster.currHealth
