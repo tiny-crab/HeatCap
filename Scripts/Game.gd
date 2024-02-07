@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var leadMonsterTypes = [load("res://Monsters/Squirtle.tres"), load("res://Monsters/Tepig.tres")]
+@onready var leadMonsterTypes = [load("res://MonsterTypes/Squirtle.tres"), load("res://MonsterTypes/Squirtle.tres")]
 @onready var monsterUI = $Canvas/MonsterUI
 @onready var gameOverDialog = $Canvas/GameOverDialog
 @onready var gameOverText = $Canvas/GameOverDialog/GameOverText
