@@ -68,7 +68,22 @@ offset_right = 260.0
 offset_bottom = 92.0
 text = "+"
 
+[node name="GameOverDialog" type="AcceptDialog" parent="Canvas"]
+title = "Game Over!"
+initial_position = 1
+size = Vector2i(275, 150)
+
+[node name="GameOverText" type="RichTextLabel" parent="Canvas/GameOverDialog"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 267.0
+offset_bottom = 101.0
+text = "Monster was KO'd!"
+fit_content = true
+
 [connection signal="pressed" from="Canvas/SubtractHealthButton" to="." method="_on_subtract_health_button_pressed"]
 [connection signal="pressed" from="Canvas/AddHealthButton" to="." method="_on_add_health_button_pressed"]
 [connection signal="pressed" from="Canvas/SubtractHeatButton" to="." method="_on_subtract_heat_button_pressed"]
 [connection signal="pressed" from="Canvas/AddHeatButton" to="." method="_on_add_heat_button_pressed"]
+[connection signal="canceled" from="Canvas/GameOverDialog" to="." method="_on_game_over_dialog_canceled"]
+[connection signal="confirmed" from="Canvas/GameOverDialog" to="." method="_on_game_over_dialog_confirmed"]

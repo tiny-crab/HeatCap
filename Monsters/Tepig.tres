@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("2_krih7")
+name = "Tepig"
 maxHealth = 25
 startingHeat = 5
 maxColdTicks = 2

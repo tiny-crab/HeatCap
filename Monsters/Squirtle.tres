@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_lfmn1")
+name = "Squirtle"
 maxHealth = 25
 startingHeat = 5
 maxColdTicks = 4

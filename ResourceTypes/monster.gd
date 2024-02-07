@@ -1,6 +1,13 @@
 extends Resource
 class_name Monster
 
+# This monster was ko'd
+enum KO_SOURCE {FROZEN, OVERHEATED, ZERO_HEALTH}
+signal ko(source: KO_SOURCE)
+
+# TODO put all signals up here in the top of this file to help organize
+
+var name: String
 var maxHealth: int
 
 signal health_updated
@@ -30,6 +37,8 @@ var currHealth: int:
 # If overheated again:
 #  X  1  2  3  4  5  6  X  X
 #    [C][Safe   ][Hot ]
+
+# TODO can all this info be separated into another object? It's super cluttered in here
 
 var startingHeat: int
 
@@ -70,6 +79,8 @@ var isHot: bool:
         return currHeat > safeZoneMax and currHeat <= currHotZoneMax
 
 func _init(type: MonsterType):
+    name = type.name
+
     maxHealth = type.maxHealth
     currHealth = maxHealth - 1
     
@@ -92,15 +103,23 @@ func addHealth(value: int):
 
 func subtractHealth(value: int):
     currHealth = clamp(currHealth - value, 0, maxHealth)
+    if (currHealth == 0):
+        ko.emit(KO_SOURCE.ZERO_HEALTH)
 
 func addHeat(value: int):
     currHeat += value
     if (currHeat > currHotZoneMax):
+        # The monster overheated!
         currHotZoneMax = clamp(currHotZoneMax - 1, safeZoneMax, hotZoneMax)
+        if (currHotZoneMax == safeZoneMax):
+            ko.emit(KO_SOURCE.OVERHEATED)
         currHeat = clamp(startingHeat, currColdZoneMin, currHotZoneMax)
 
 func subtractHeat(value: int):
     currHeat -= value
     if (currHeat < currColdZoneMin):
+        # The monster froze!
         currColdZoneMin = clamp(currColdZoneMin + 1, coldZoneMin, safeZoneMin)
+        if (currColdZoneMin == safeZoneMin):
+            ko.emit(KO_SOURCE.FROZEN)
         currHeat = clamp(startingHeat, currColdZoneMin, currHotZoneMax)
