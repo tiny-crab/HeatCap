@@ -18,22 +18,22 @@ func _ready():
     startGame()
 
 func _on_subtract_health_button_pressed():
-    leadMonster.subtractHealth(1)
+    leadMonster.heatBar.subtractHealth(1)
 
 func _on_add_health_button_pressed():
-    leadMonster.addHealth(1)
+    leadMonster.heatBar.addHealth(1)
 
 func _on_subtract_heat_button_pressed():
-    leadMonster.subtractHeat(1)
+    leadMonster.heatBar.subtractHeat(1)
 
 func _on_add_heat_button_pressed():
-    leadMonster.addHeat(1)
+    leadMonster.heatBar.addHeat(1)
 
 func _on_lead_monster_ko(source: Monster.KO_SOURCE) -> void:
     match source:
         Monster.KO_SOURCE.FROZEN:
             gameOverText.text = "Brr! %s is numb! Try again." % leadMonster.name
-        Monster.KO_SOURCE.OVERHEATED:
+        Monster.KO_SOURCE.BURNED:
             gameOverText.text = "Ouch! %s was burned up! Try again." % leadMonster.name
         Monster.KO_SOURCE.ZERO_HEALTH:
             gameOverText.text = "%s is exhausted! Try again." % leadMonster.name

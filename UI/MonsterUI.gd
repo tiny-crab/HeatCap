@@ -11,23 +11,23 @@ func attach(toAttach: Monster):
     monster.health_updated.connect(render_health)
     render_health()
 
-    monster.hotzone_updated.connect(render_bar)
-    monster.coldzone_updated.connect(render_bar)
-    monster.heat_updated.connect(render_bar)
+    monster.heatBar.hotzone_updated.connect(render_bar)
+    monster.heatBar.coldzone_updated.connect(render_bar)
+    monster.heatBar.heat_updated.connect(render_bar)
     render_bar()
 
 func render_bar():
-    $HeatBar.max_value = monster.currHotZoneMax
-    $HeatBar.min_value = monster.currColdZoneMin
-    $HeatBar/Value.text =  "[center]%s[/center]" % monster.currHeat
-    $HeatBar.value = monster.currHeat
+    $HeatBar.max_value = monster.heatBar.currHotZoneMax
+    $HeatBar.min_value = monster.heatBar.currColdZoneMin
+    $HeatBar/Value.text =  "[center]%s[/center]" % monster.heatBar.currHeat
+    $HeatBar.value = monster.heatBar.currHeat
     var sb = StyleBoxFlat.new()
     $HeatBar.add_theme_stylebox_override("fill", sb)
-    if monster.isCold:
+    if monster.heatBar.isCold:
         sb.bg_color = Color("268bd2")
-    if monster.isSafe:
+    if monster.heatBar.isSafe:
         sb.bg_color = Color("859900")
-    if monster.isHot:
+    if monster.heatBar.isHot:
         sb.bg_color = Color("dc322f")
 
 func render_health():
