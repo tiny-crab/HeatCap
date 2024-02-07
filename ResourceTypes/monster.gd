@@ -21,7 +21,7 @@ var currHealth: int:
 # Cold Zone = 0, 1
 # Safe Zone = 2, 3, 4
 # Hot Zone = 5, 6, 7, 8
-# 
+#
 # To begin:
 #  0  1  2  3  4  5  6  7  8
 # [Cold][Safe   ][Hot       ]
@@ -83,18 +83,18 @@ func _init(type: MonsterType):
 
     maxHealth = type.maxHealth
     currHealth = maxHealth - 1
-    
+
     coldZoneMin = 0
     coldZoneMax = type.maxColdTicks - 1
     currColdZoneMin = coldZoneMin
-    
+
     safeZoneMin = type.maxColdTicks
     safeZoneMax = type.maxColdTicks + type.maxSafeTicks - 1
-    
+
     hotZoneMin = type.maxColdTicks + type.maxSafeTicks
     hotZoneMax = type.maxColdTicks + type.maxSafeTicks + type.maxHotTicks - 1
     currHotZoneMax = hotZoneMax
-    
+
     currHeat = type.startingHeat
     startingHeat = type.startingHeat
 

@@ -8,17 +8,17 @@ func default_effect():
 
 func damage():
     pass
-    
+
 func block():
     pass
-    
+
 func evade():
     pass
-    
+
 func get_effect():
     match effectName:
         "Damage": return damage
         "Block": return block
         "Evade": return evade
         _: return default_effect
-        
+
