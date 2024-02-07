@@ -6,9 +6,9 @@ var monster: Monster
 func attach(toAttach: Monster):
     monster = toAttach
 
-    $HealthBar.max_value = monster.maxHealth
+    $HealthBar.max_value = monster.healthBar.maxHealth
 
-    monster.health_updated.connect(render_health)
+    monster.healthBar.health_updated.connect(render_health)
     render_health()
 
     monster.heatBar.hotzone_updated.connect(render_bar)
@@ -31,4 +31,4 @@ func render_bar():
         sb.bg_color = Color("dc322f")
 
 func render_health():
-    $HealthBar.value = monster.currHealth
+    $HealthBar.value = monster.healthBar.currHealth

@@ -18,10 +18,10 @@ func _ready():
     startGame()
 
 func _on_subtract_health_button_pressed():
-    leadMonster.heatBar.subtractHealth(1)
+    leadMonster.healthBar.subtractHealth(1)
 
 func _on_add_health_button_pressed():
-    leadMonster.heatBar.addHealth(1)
+    leadMonster.healthBar.addHealth(1)
 
 func _on_subtract_heat_button_pressed():
     leadMonster.heatBar.subtractHeat(1)
