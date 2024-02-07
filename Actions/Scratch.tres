@@ -1,8 +1,19 @@
-[gd_resource type="Resource" script_class="Action" load_steps=2 format=3 uid="uid://brdfk7et13hvv"]
+[gd_resource type="Resource" script_class="Action" load_steps=6 format=3 uid="uid://brdfk7et13hvv"]
 
-[ext_resource type="Script" path="res://ResourceTypes/action.gd" id="1_ulrao"]
+[ext_resource type="Script" path="res://Actions/ActionEffects/block_effect.gd" id="1_1r1th"]
+[ext_resource type="Script" path="res://Actions/ActionEffects/damage_effect.gd" id="1_5q2ek"]
+[ext_resource type="Script" path="res://Actions/action.gd" id="1_ggbow"]
+
+[sub_resource type="Resource" id="Resource_mok3w"]
+script = ExtResource("1_1r1th")
+blockValue = 0
+
+[sub_resource type="Resource" id="Resource_fuwsl"]
+script = ExtResource("1_5q2ek")
+damageValue = 0
 
 [resource]
-script = ExtResource("1_ulrao")
+script = ExtResource("1_ggbow")
 name = "Scratch"
-effectList = Array[Resource("res://ResourceTypes/action_effect.gd")]([])
+effectList = Array[Resource("res://Actions/ActionEffects/action_effect.gd")]([SubResource("Resource_mok3w"), SubResource("Resource_fuwsl")])
+priority = 0

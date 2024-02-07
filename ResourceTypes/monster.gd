@@ -19,6 +19,9 @@ func _init(type: MonsterType):
     heatBar.frozen.connect(_on_frozen)
     heatBar.burned.connect(_on_burned)
 
+func damage(value: int) -> void:
+    healthBar.subtractHealth(value)
+
 func _on_frozen() -> void:
     ko.emit(KO_SOURCE.FROZEN)
 
