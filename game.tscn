@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://8xlmihcy1byk"]
+[gd_scene load_steps=5 format=3 uid="uid://8xlmihcy1byk"]
 
 [ext_resource type="Script" path="res://UI/MonsterUI.gd" id="1_1k4kd"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_qrvsg"]
+[ext_resource type="Script" path="res://UI/ActionList.gd" id="3_h58vj"]
+[ext_resource type="PackedScene" uid="uid://dbnopuky8b6a6" path="res://UI/action_option.tscn" id="4_xe6k2"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_qrvsg")
@@ -80,6 +82,24 @@ offset_right = 267.0
 offset_bottom = 101.0
 text = "Monster was KO'd!"
 fit_content = true
+
+[node name="ActionList" type="VBoxContainer" parent="Canvas"]
+offset_top = 145.0
+offset_right = 40.0
+offset_bottom = 185.0
+script = ExtResource("3_h58vj")
+
+[node name="ActionOption0" parent="Canvas/ActionList" instance=ExtResource("4_xe6k2")]
+layout_mode = 2
+
+[node name="ActionOption1" parent="Canvas/ActionList" instance=ExtResource("4_xe6k2")]
+layout_mode = 2
+
+[node name="ActionOption2" parent="Canvas/ActionList" instance=ExtResource("4_xe6k2")]
+layout_mode = 2
+
+[node name="ActionOption3" parent="Canvas/ActionList" instance=ExtResource("4_xe6k2")]
+layout_mode = 2
 
 [connection signal="pressed" from="Canvas/SubtractHealthButton" to="." method="_on_subtract_health_button_pressed"]
 [connection signal="pressed" from="Canvas/AddHealthButton" to="." method="_on_add_health_button_pressed"]

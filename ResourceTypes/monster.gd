@@ -8,6 +8,7 @@ enum KO_SOURCE {FROZEN, BURNED, ZERO_HEALTH}
 var name: String
 var heatBar: MonsterHeatBar
 var healthBar: HealthBar
+var actions: Array[Action]
 
 func _init(type: MonsterType):
     name = type.name
@@ -18,6 +19,11 @@ func _init(type: MonsterType):
     heatBar = MonsterHeatBar.new(type)
     heatBar.frozen.connect(_on_frozen)
     heatBar.burned.connect(_on_burned)
+
+    actions = type.actions
+
+func act(action: Action) -> void:
+    print("Took action %s" % action.name)
 
 func damage(value: int) -> void:
     healthBar.subtractHealth(value)
