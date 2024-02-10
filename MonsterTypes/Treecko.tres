@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("1_224p2")
-name = "MonsterName"
+name = "Treecko"
 maxHealth = 25
 startingHeat = 4
 maxColdTicks = 3

@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var leadMonsterTypes = [load("res://MonsterTypes/Squirtle.tres"), load("res://MonsterTypes/Squirtle.tres")]
+@onready var leadMonsterTypes = [load("res://MonsterTypes/Squirtle.tres"), load("res://MonsterTypes/Tepig.tres"), load("res://MonsterTypes/Treecko.tres")]
 @onready var monsterUI = $Canvas/MonsterUI
 @onready var actionList = $Canvas/ActionList
 @onready var gameOverDialog = $Canvas/GameOverDialog
@@ -8,9 +8,15 @@ extends Node2D
 
 var leadMonster: Monster
 var leadMonsterType: Resource
+var leadMonsterTypeIndex: int = 0
+
+func chooseLeadMonsterType() -> Resource :
+    var type = leadMonsterTypes[leadMonsterTypeIndex % leadMonsterTypes.size()]
+    leadMonsterTypeIndex += 1
+    return type
 
 func startGame():
-    leadMonsterType = leadMonsterTypes[randi() % leadMonsterTypes.size()]
+    leadMonsterType = chooseLeadMonsterType()
     leadMonster = Monster.new(leadMonsterType)
     monsterUI.attach(leadMonster)
     actionList.attach(leadMonster)
