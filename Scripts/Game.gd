@@ -21,6 +21,7 @@ func startGame():
     monsterUI.attach(leadMonster)
     actionList.attach(leadMonster)
     leadMonster.ko.connect(self._on_lead_monster_ko)
+    leadMonster.take_action.connect(self._on_action_taken)
 
 func _ready():
     startGame()
@@ -46,6 +47,9 @@ func _on_lead_monster_ko(source: Monster.KO_SOURCE) -> void:
         Monster.KO_SOURCE.ZERO_HEALTH:
             gameOverText.text = "%s is exhausted! Try again." % leadMonster.name
     gameOverDialog.show()
+
+func _on_action_taken(action: Action, monster: Monster):
+    print("%s took action %s" % [monster.name, action.name])
 
 func _on_game_over_dialog_confirmed():
     startGame()

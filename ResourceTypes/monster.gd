@@ -5,6 +5,8 @@ class_name Monster
 signal ko(source: KO_SOURCE)
 enum KO_SOURCE {FROZEN, BURNED, ZERO_HEALTH}
 
+signal take_action(action: Action, monster: Monster)
+
 var name: String
 var heatBar: MonsterHeatBar
 var healthBar: HealthBar
@@ -23,7 +25,7 @@ func _init(type: MonsterType):
     actions = type.actions
 
 func act(action: Action) -> void:
-    print("Took action %s" % action.name)
+    take_action.emit(action, self)
 
 func damage(value: int) -> void:
     healthBar.subtractHealth(value)
