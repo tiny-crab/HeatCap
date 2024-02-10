@@ -5,12 +5,16 @@ extends Node2D
 @onready var actionList = $Canvas/ActionList
 @onready var gameOverDialog = $Canvas/GameOverDialog
 @onready var gameOverText = $Canvas/GameOverDialog/GameOverText
+@onready var turnCounter: TurnCounter = $Canvas/TurnCounter
 
 var leadMonster: Monster
 var leadMonsterType: Resource
 var leadMonsterTypeIndex: int = 0
 
-func chooseLeadMonsterType() -> Resource :
+var activeParty: PARTY = PARTY.PLAYER
+enum PARTY { PLAYER, SCENARIO }
+
+func chooseLeadMonsterType() -> Resource:
     var type = leadMonsterTypes[leadMonsterTypeIndex % leadMonsterTypes.size()]
     leadMonsterTypeIndex += 1
     return type
@@ -22,6 +26,16 @@ func startGame():
     actionList.attach(leadMonster)
     leadMonster.ko.connect(self._on_lead_monster_ko)
     leadMonster.take_action.connect(self._on_action_taken)
+
+func endTurn():
+    turnCounter.nextTurn()
+    match activeParty:
+        PARTY.PLAYER:
+            activeParty = PARTY.SCENARIO
+            print("It is now scenario's turn")
+        PARTY.SCENARIO:
+            activeParty = PARTY.PLAYER
+            print("It is now player's turn")
 
 func _ready():
     startGame()
@@ -56,3 +70,6 @@ func _on_game_over_dialog_confirmed():
 
 func _on_game_over_dialog_canceled():
     startGame()
+
+func _on_end_turn_pressed():
+    endTurn()

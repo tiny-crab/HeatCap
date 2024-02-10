@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://8xlmihcy1byk"]
+[gd_scene load_steps=6 format=3 uid="uid://8xlmihcy1byk"]
 
 [ext_resource type="Script" path="res://UI/MonsterUI.gd" id="1_1k4kd"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_qrvsg"]
 [ext_resource type="Script" path="res://UI/ActionList.gd" id="3_h58vj"]
 [ext_resource type="PackedScene" uid="uid://dbnopuky8b6a6" path="res://UI/action_option.tscn" id="4_xe6k2"]
+[ext_resource type="Script" path="res://DataClasses/TurnCounter.gd" id="5_galw0"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_qrvsg")
@@ -84,9 +85,13 @@ text = "Monster was KO'd!"
 fit_content = true
 
 [node name="ActionList" type="VBoxContainer" parent="Canvas"]
-offset_top = 145.0
-offset_right = 40.0
-offset_bottom = 185.0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -398.0
+offset_right = 246.0
+grow_vertical = 0
+theme_override_constants/separation = 30
 script = ExtResource("3_h58vj")
 
 [node name="ActionOption0" parent="Canvas/ActionList" instance=ExtResource("4_xe6k2")]
@@ -101,9 +106,28 @@ layout_mode = 2
 [node name="ActionOption3" parent="Canvas/ActionList" instance=ExtResource("4_xe6k2")]
 layout_mode = 2
 
+[node name="EndTurn" type="Button" parent="Canvas/ActionList"]
+layout_mode = 2
+text = "End Turn"
+
+[node name="TurnCounter" type="VBoxContainer" parent="Canvas"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -125.0
+offset_bottom = 40.0
+grow_horizontal = 0
+script = ExtResource("5_galw0")
+
+[node name="TurnCount" type="Label" parent="Canvas/TurnCounter"]
+layout_mode = 2
+text = "Turn %s"
+horizontal_alignment = 1
+
 [connection signal="pressed" from="Canvas/SubtractHealthButton" to="." method="_on_subtract_health_button_pressed"]
 [connection signal="pressed" from="Canvas/AddHealthButton" to="." method="_on_add_health_button_pressed"]
 [connection signal="pressed" from="Canvas/SubtractHeatButton" to="." method="_on_subtract_heat_button_pressed"]
 [connection signal="pressed" from="Canvas/AddHeatButton" to="." method="_on_add_heat_button_pressed"]
 [connection signal="canceled" from="Canvas/GameOverDialog" to="." method="_on_game_over_dialog_canceled"]
 [connection signal="confirmed" from="Canvas/GameOverDialog" to="." method="_on_game_over_dialog_confirmed"]
+[connection signal="pressed" from="Canvas/ActionList/EndTurn" to="." method="_on_end_turn_pressed"]
