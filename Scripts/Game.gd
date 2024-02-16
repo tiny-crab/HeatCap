@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var leadMonsterTypes = [load("res://MonsterTypes/Squirtle.tres"), load("res://MonsterTypes/Tepig.tres"), load("res://MonsterTypes/Treecko.tres")]
 @onready var monsterUI = $Canvas/MonsterUI
+@onready var playerMonsterImage = $Canvas/PlayerMonsterImage
 @onready var actionList = $Canvas/ActionList
 @onready var gameOverDialog = $Canvas/GameOverDialog
 @onready var gameOverText = $Canvas/GameOverDialog/GameOverText
@@ -24,6 +25,7 @@ func startGame():
     leadMonster = Monster.new(leadMonsterType)
     monsterUI.attach(leadMonster)
     actionList.attach(leadMonster)
+    playerMonsterImage.texture = leadMonster.type.texture
     leadMonster.ko.connect(self._on_lead_monster_ko)
     leadMonster.take_action.connect(self._on_action_taken)
 

@@ -7,5 +7,6 @@ class_name MonsterType
 @export var maxColdTicks: int = 1
 @export var maxSafeTicks: int = 1
 @export var maxHotTicks: int = 1
+@export var texture: Texture
 
 @export var actions: Array[Action] = []

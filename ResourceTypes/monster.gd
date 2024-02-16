@@ -11,6 +11,7 @@ var name: String
 var heatBar: MonsterHeatBar
 var healthBar: HealthBar
 var actions: Array[Action]
+var type: MonsterType
 
 func _init(type: MonsterType):
     name = type.name
@@ -23,6 +24,8 @@ func _init(type: MonsterType):
     heatBar.burned.connect(_on_burned)
 
     actions = type.actions
+
+    self.type = type
 
 func act(action: Action) -> void:
     take_action.emit(action, self)

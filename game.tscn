@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://8xlmihcy1byk"]
 
-[ext_resource type="Script" path="res://UI/MonsterUI.gd" id="1_1k4kd"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_qrvsg"]
+[ext_resource type="PackedScene" uid="uid://dee7sd5imhnmk" path="res://UI/monster_ui.tscn" id="2_57lua"]
 [ext_resource type="Script" path="res://UI/ActionList.gd" id="3_h58vj"]
 [ext_resource type="PackedScene" uid="uid://dbnopuky8b6a6" path="res://UI/action_option.tscn" id="4_xe6k2"]
 [ext_resource type="Script" path="res://DataClasses/TurnCounter.gd" id="5_galw0"]
@@ -11,37 +11,22 @@ script = ExtResource("1_qrvsg")
 
 [node name="Canvas" type="CanvasLayer" parent="."]
 
-[node name="MonsterUI" type="Control" parent="Canvas"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("1_1k4kd")
+[node name="PlayerMonsterImage" type="TextureRect" parent="Canvas"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -173.0
+offset_top = -20.0
+offset_right = -133.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 5
+flip_h = true
 
-[node name="HealthBar" type="ProgressBar" parent="Canvas/MonsterUI"]
-layout_mode = 0
-offset_left = 35.0
-offset_top = 19.0
-offset_right = 233.0
-offset_bottom = 51.0
-
-[node name="HeatBar" type="ProgressBar" parent="Canvas/MonsterUI"]
-layout_mode = 0
-offset_left = 35.0
-offset_top = 64.0
-offset_right = 233.0
-offset_bottom = 96.0
-step = 1.0
-show_percentage = false
-metadata/_edit_group_ = true
-
-[node name="Value" type="RichTextLabel" parent="Canvas/MonsterUI/HeatBar"]
-layout_mode = 0
-offset_right = 198.0
-offset_bottom = 31.0
-bbcode_enabled = true
-text = "0"
-autowrap_mode = 0
+[node name="MonsterUI" parent="Canvas" instance=ExtResource("2_57lua")]
 
 [node name="SubtractHealthButton" type="Button" parent="Canvas"]
 offset_left = 6.0

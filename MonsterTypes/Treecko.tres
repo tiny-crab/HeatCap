@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="MonsterType" load_steps=4 format=3 uid="uid://dr4srfc3sdhhs"]
+[gd_resource type="Resource" script_class="MonsterType" load_steps=5 format=3 uid="uid://dr4srfc3sdhhs"]
 
 [ext_resource type="Script" path="res://ResourceTypes/monster_type.gd" id="1_224p2"]
 [ext_resource type="Resource" uid="uid://dmsoxrcc107uh" path="res://Actions/CurlUp.tres" id="1_qh22f"]
 [ext_resource type="Resource" uid="uid://brdfk7et13hvv" path="res://Actions/Scratch.tres" id="2_bec4o"]
+[ext_resource type="Texture2D" uid="uid://bx4326he4hs0y" path="res://Sprites/Treecko.png" id="4_0e7mq"]
 
 [resource]
 script = ExtResource("1_224p2")
@@ -12,4 +13,5 @@ startingHeat = 4
 maxColdTicks = 3
 maxSafeTicks = 3
 maxHotTicks = 3
+texture = ExtResource("4_0e7mq")
 actions = Array[Resource("res://Actions/action.gd")]([ExtResource("1_qh22f"), ExtResource("2_bec4o")])

@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="MonsterType" load_steps=5 format=3 uid="uid://chkah8k3uf3gp"]
+[gd_resource type="Resource" script_class="MonsterType" load_steps=6 format=3 uid="uid://chkah8k3uf3gp"]
 
 [ext_resource type="Script" path="res://ResourceTypes/monster_type.gd" id="1_lfmn1"]
 [ext_resource type="Resource" uid="uid://brdfk7et13hvv" path="res://Actions/Scratch.tres" id="1_rdbdi"]
 [ext_resource type="Resource" uid="uid://dmsoxrcc107uh" path="res://Actions/CurlUp.tres" id="2_f85vl"]
 [ext_resource type="Resource" uid="uid://b6hf6y1byi7e2" path="res://Actions/Bubble.tres" id="3_6ko3w"]
+[ext_resource type="Texture2D" uid="uid://iu4hvuw8kxgu" path="res://Sprites/Squirtle.png" id="5_6ldaf"]
 
 [resource]
 script = ExtResource("1_lfmn1")
@@ -13,4 +14,5 @@ startingHeat = 5
 maxColdTicks = 4
 maxSafeTicks = 3
 maxHotTicks = 2
+texture = ExtResource("5_6ldaf")
 actions = Array[Resource("res://Actions/action.gd")]([ExtResource("1_rdbdi"), ExtResource("2_f85vl"), ExtResource("3_6ko3w")])
